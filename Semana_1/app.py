@@ -44,20 +44,9 @@ with col2:
         # Mostrar resultado con un componente visual destacado
         st.metric(
             label="Ventas Proyectadas Estimadas", 
-            value=f"Q {resultado[0]:,.2f}", 
+            value=f"$ {resultado[0]:,.2f}", 
             delta=f"Inversión: ${gasto}"
         )
         st.success("¡Cálculo exitoso!")
     else:
         st.write("Haz clic en **Calcular Predicción** para ver los resultados.")
-
-# 5. Visualización del modelo histórico
-st.markdown("---")
-st.subheader("📉 Datos Históricos")
-# Crear un dataframe para graficar
-df_datos = pd.DataFrame({
-    'Inversión en Publicidad': variable_x.flatten(),
-    'Ventas': variable_y
-})
-# Mostrar el gráfico
-st.line_chart(df_datos.set_index('Inversión en Publicidad'))
