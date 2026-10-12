@@ -9,6 +9,7 @@ Permite a perfiles de negocio explorar:
 Correr con:  streamlit run streamlit_starter.py
 """
 
+from pathlib import Path
 import pandas as pd
 import numpy as np
 import streamlit as st
@@ -28,11 +29,21 @@ GREEN = "#00704A"
 ORANGE = "#C4512F"
 GRAY = "#9A988E"
 FEATURES = ["recency_days", "frequency", "monetary", "email_open_rate", "tenure_days"]
+BASE_DIR = Path(__file__).resolve().parent
 
 
 @st.cache_data
 def load_data():
-    return pd.read_csv("data/uplift_campaign.csv")
+    posibles_rutas = [
+        BASE_DIR / "data" / "uplift_campaign.csv",
+        Path("Semana_3/Tarea/data/uplift_campaign.csv"),
+        Path("data/uplift_campaign.csv"),
+    ]
+    for ruta in posibles_rutas:
+        if ruta.exists():
+            return pd.read_csv(ruta)
+    raise FileNotFoundError("No se encontró 'uplift_campaign.csv'.")
+
 
 
 @st.cache_data
